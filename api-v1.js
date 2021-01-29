@@ -82,4 +82,32 @@ route.delete("/", (req, res) => {
 	}
 });
 
+//UPDATE todo
+route.patch("/", (req, res) => {
+	const id = req.body.id ? req.body.id : null;
+	if(id) {
+		const done = req.body.done ? req.body.done : 0;
+		let mysql_req = "UPDATE todo SET done=" + done + " WHERE id=" + id;
+		Database.request(mysql_req)
+		.then(result => {
+			res.json({
+				status: 1,
+				response: result
+			});
+		})
+		.catch(err => {
+			res.json({
+				status: 0,
+				response: err
+			});
+		});
+	}
+	else {
+		res.json({
+			status: 0,
+			response: "Missing body parameter: id"
+		});
+	}
+});
+
 module.exports = {path, route};
