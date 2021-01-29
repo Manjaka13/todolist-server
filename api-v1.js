@@ -7,7 +7,7 @@ const Database = new database();
 Database.connect();
 
 //READ todo table
-route.get("/", (req, res) => {
+route.post("/", (req, res) => {
 	const date = req.body.date ? req.body.date : null;
 	const mysql_req = "SELECT * from todo" + (date ? (" WHERE _date=" + date) : "");
 	Database.request(mysql_req)
