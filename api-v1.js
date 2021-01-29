@@ -6,10 +6,10 @@ const path = "/api/v1/";
 const Database = new database();
 Database.connect();
 
-//READ user table
+//READ todo table
 route.get("/", (req, res) => {
-	const id = req.body.id && req.body.id >= 0 ? req.body.id : null;
-	const mysql_req = "SELECT * from todo" + (id ? (" WHERE id=" + id) : "");
+	const date = req.body.date ? req.body.date : null;
+	const mysql_req = "SELECT * from todo" + (date ? (" WHERE _date=" + date) : "");
 	Database.request(mysql_req)
 	.then(result => {
 		res.json({
@@ -25,7 +25,7 @@ route.get("/", (req, res) => {
 	});
 });
 
-//ADD user table
+//ADD todo table
 route.put("/", (req, res) => {
 	const task = req.body.task || null;
 	if(task) {
@@ -55,7 +55,7 @@ route.put("/", (req, res) => {
 	}
 });
 
-//DELETE user table
+//DELETE todo table
 route.delete("/", (req, res) => {
 	const id = req.body.id ? req.body.id : null;
 	if(id) {
