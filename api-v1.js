@@ -6,7 +6,7 @@ const path = "/api/v1/";
 const Database = new database();
 Database.connect();
 
-//READ todo table
+//READ todo
 route.post("/", (req, res) => {
 	const date = req.body.date ? req.body.date : null;
 	const mysql_req = "SELECT * from todo" + (date ? (" WHERE _date=\"" + date + "\"") : "");
@@ -25,7 +25,7 @@ route.post("/", (req, res) => {
 	});
 });
 
-//ADD todo table
+//ADD todo
 route.put("/", (req, res) => {
 	const task = req.body.task || null;
 	if(task) {
@@ -55,7 +55,7 @@ route.put("/", (req, res) => {
 	}
 });
 
-//DELETE todo table
+//DELETE todo
 route.delete("/", (req, res) => {
 	const id = req.body.id ? req.body.id : null;
 	if(id) {
