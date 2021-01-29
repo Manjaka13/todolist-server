@@ -6,23 +6,10 @@ const path = "/api/v1/";
 const Database = new database();
 Database.connect();
 
-route.get("/", (req, res) => {
-	res.json({
-		title: "Todolist API v1",
-		GET: [
-			"/user => gets list of all users in database.",
-			"/user with body 'mail' => gets specific user."
-		],
-		PUT: [
-			"/user => creates new user (mail, name, avatar)"
-		]
-	});
-});
-
 //READ user table
-route.get("/user", (req, res) => {
-	const mail = req.body.mail ? req.body.mail : null;
-	const mysql_req = "SELECT * from user" + (mail ? " WHERE mail=\"" + mail + "\"" : "");
+route.get("/", (req, res) => {
+	const id = req.body.id && req.body.id >= 0 ? req.body.id : null;
+	const mysql_req = "SELECT * from todo" + (id ? (" WHERE id=" + id) : "");
 	Database.request(mysql_req)
 	.then(result => {
 		res.json({
@@ -39,16 +26,13 @@ route.get("/user", (req, res) => {
 });
 
 //ADD user table
-route.put("/user", (req, res) => {
-	const mail = req.body.mail ? req.body.mail : null;
-	const name = req.body.name ? req.body.name : null;
-	if(mail && name) {
-		const avatar = req.body.avatar ? req.body.avatar : null;
-		let mysql_req = "INSERT INTO user(mail, name, avatar) VALUES (\"" + mail + "\", \"" + name + "\"";
-		if(avatar)
-			mysql_req += ", \"" + avatar + "\")";
-		else
-			mysql_req += ", null)";
+route.put("/", (req, res) => {
+	const task = req.body.task || null;
+	if(task) {
+		const date = req.body.date || null
+		let mysql_req = "INSERT INTO todo(task) VALUES (\"" + task + "\")";
+		if(date)
+			mysql_req = "INSERT INTO todo(task, _date) VALUES (\"" + task + "\", \"" + date + "\")";
 		Database.request(mysql_req)
 		.then(result => {
 			res.json({
@@ -66,17 +50,16 @@ route.put("/user", (req, res) => {
 	else {
 		res.json({
 			status: 0,
-			response: "Missing body parameter name or mail."
+			response: "Missing body parameter: task."
 		});
 	}
 });
 
 //DELETE user table
-route.delete("/user", (req, res) => {
-	const mail = req.body.mail ? req.body.mail : null;
-	const name = req.body.name ? req.body.name : null;
-	if(mail) {
-		let mysql_req = "DELETE FROM user WHERE mail=\"" + mail + "\"";
+route.delete("/", (req, res) => {
+	const id = req.body.id ? req.body.id : null;
+	if(id) {
+		let mysql_req = "DELETE FROM todo WHERE id=" + id;
 		Database.request(mysql_req)
 		.then(result => {
 			res.json({
@@ -94,7 +77,7 @@ route.delete("/user", (req, res) => {
 	else {
 		res.json({
 			status: 0,
-			response: "Missing body parameter mail."
+			response: "Missing body parameter: id"
 		});
 	}
 });

@@ -1,5 +1,4 @@
 /node_modules
-*.sql
 *.env
 package-lock.json
 LICENSE
