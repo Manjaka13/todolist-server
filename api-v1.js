@@ -9,7 +9,7 @@ Database.connect();
 //READ todo table
 route.post("/", (req, res) => {
 	const date = req.body.date ? req.body.date : null;
-	const mysql_req = "SELECT * from todo" + (date ? (" WHERE _date=" + date) : "");
+	const mysql_req = "SELECT * from todo" + (date ? (" WHERE _date=\"" + date + "\"") : "");
 	Database.request(mysql_req)
 	.then(result => {
 		res.json({
