@@ -11,9 +11,9 @@ CREATE TABLE IF NOT EXISTS todo(
 ) ENGINE=INNODB CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 INSERT INTO todo(task, _date) VALUES
-("Help the neighboors", "2021-01-29"),
-("Clean the whole house", "2021-01-29"),
-("Prepare the lunch", "2021-01-29"),
-("Do some aerobic training", "2021-01-29"),
-("Help kids with homework", "2021-01-28"),
-("Go to the dentist", "2021-01-28");
+("Help the neighboors", "2021-01-30"),
+("Clean the whole house", "2021-01-30"),
+("Prepare the lunch", "2021-01-30"),
+("Do some aerobic training", "2021-01-30"),
+("Help kids with homework", "2021-01-31"),
+("Go to the dentist", "2021-01-31");
