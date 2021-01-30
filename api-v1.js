@@ -6,6 +6,24 @@ const path = "/api/v1/";
 const Database = new database();
 Database.connect();
 
+//READ todo for public browsers
+route.get("/", (req, res) => {
+	const mysql_req = "SELECT * from todo";
+	Database.request(mysql_req)
+	.then(result => {
+		res.json({
+			status: 1,
+			response: result
+		});
+	})
+	.catch(err => {
+		res.json({
+			status: 0,
+			response: err
+		});
+	});
+});
+
 //READ todo
 route.post("/", (req, res) => {
 	const date = req.body.date ? req.body.date : null;
